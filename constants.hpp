@@ -1,7 +1,12 @@
 #pragma once
 
+#include <iostream>
+
 #define ESC '\x1b'
 #define CSI "\x1b["
+#define OSC "\x1b]"
+#define BACKSLASH '\\'
+#define STRING_TERMINATOR ESC + BACKSLASH
 
 
 namespace cursor {
