@@ -1,12 +1,20 @@
 #pragma once
 
 #include <iostream>
+#include <string>
 
-#define ESC '\x1b'
+#define ESC "\x1b"
 #define CSI "\x1b["
 #define OSC "\x1b]"
-#define BACKSLASH '\\'
-#define STRING_TERMINATOR ESC + BACKSLASH
+#define BACKSLASH "\\"
+#define STRING_TERMINATOR "\x1b\\"
+
+
+const std::string ESC_(ESC);
+const std::string CSI_(CSI);
+const std::string OSC_(OSC);
+const std::string BACKSLASH_(BACKSLASH);
+const std::string STRING_TERMINATOR_(STRING_TERMINATOR);
 
 
 namespace cursor {
@@ -30,9 +38,9 @@ namespace cursor {
         #define ANSISYSRC 'u' // "Restore Cursor [Position]"
 
         // WARNING: Some of the following were introduced with VT100 and may not be supported by all terminals
-        const char DECSC = ESC + '7';
-        const char DECSR = ESC + '8';
-        const char RI = ESC + 'M'; // "Reverse Index"
+        std::string DECSC = ESC_ + '7';
+        std::string DECSR = ESC_ + '8';
+        std::string RI = ESC_ + 'M'; // "Reverse Index"
     }
 
     namespace visibility {
