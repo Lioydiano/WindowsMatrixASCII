@@ -53,3 +53,36 @@ namespace cursor {
         #define END_ 'F' // "End"
     }
 }
+
+
+namespace viewport {
+    namespace positioning {
+        #define SU_ 'S' // "Scroll Up"
+        #define SD_ 'T' // "Scroll Down"
+
+        void scrollUp(int lines) {
+            std::cout << CSI + lines + SU_;
+        }
+
+        void scrollDown(int lines) {
+            std::cout << CSI + lines + SD_;
+        }
+    }
+
+    namespace title {
+        #define SWT_ '0' // "Set Window Title"
+        #define SWT_ALIAS '2' // "Set Window Title"
+
+        void setTitle(const std::string& title) {
+            std::cout << OSC + SWT_ + ';' + title + STRING_TERMINATOR;
+        }
+    }
+
+    namespace sizes {
+        #define DECCOLM_132_ std::string("?3h") // "132 Column Mode"
+        #define DECCOLM_80_ std::string("?3l") // "80 Column Mode"
+
+        std::string DECCLM_132 = CSI_ + DECCOLM_132_;
+        std::string DECCLM_80 = CSI_ + DECCOLM_80_;
+    }
+}
