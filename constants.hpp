@@ -81,7 +81,7 @@ namespace viewport {
         #define SWT_ '0' // "Set Window Title"
         #define SWT_ALIAS '2' // "Set Window Title"
 
-        void setTitle(const std::string& title) {
+        void setTitle(const std::string title) {
             std::cout << OSC + SWT_ + ';' + title + STRING_TERMINATOR;
         }
     }
