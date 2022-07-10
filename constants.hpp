@@ -8,6 +8,16 @@
 #define OSC "\x1b]"
 #define BACKSLASH "\\"
 #define STRING_TERMINATOR "\x1b\\"
+#define RESET "\x1b[0m"
+
+#define BEL '\x07' // Bell
+#define BS '\x08' // Backspace
+#define TAB '\x09' // Tab
+#define LF '\x0a' // Line Feed
+#define VT '\x0b' // Vertical Tab
+#define FF '\x0c' // Form Feed
+#define CR '\x0d' // Carriage Return
+#define DEL '\x7f' // Delete
 
 
 const std::string ESC_(ESC);
@@ -15,6 +25,7 @@ const std::string CSI_(CSI);
 const std::string OSC_(OSC);
 const std::string BACKSLASH_(BACKSLASH);
 const std::string STRING_TERMINATOR_(STRING_TERMINATOR);
+const std::string RESET_(RESET);
 
 
 namespace cursor {
