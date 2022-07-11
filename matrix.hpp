@@ -2,6 +2,8 @@
 
 #include "style.hpp"
 
+
+int currentID = 0;
 const char void_matrix[20][50] = {
     {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
     {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
@@ -26,18 +28,69 @@ const char void_matrix[20][50] = {
 };
 
 
-class Character {
+class Field;
+
+
+class Object {
 public:
     // Position is matrix[y][x] where matrix[0][0] is the top left corner of the field
+    int ID;
     int x;
     int y;
     char skin;
     Style style;
+    Field *field;
 
-    Character(int x, int y, char skin, Style style) {
+    Object(int x, int y, char skin, Style style) {
+        this->ID = currentID++;
         this->x = x;
         this->y = y;
         this->skin = skin;
         this->style = style;
+    }
+    Object(int x, int y, char skin, Style style, Field *field) {
+        this->field = field;
+        Object(x, y, skin, style);
+    }
+
+    ~Object() {
+        field->objects.erase(std::remove_if(field->objects.begin(), field->objects.end(), [this](Object *o) {
+            return o->ID == this->ID;
+        }), field->objects.end());
+    }
+};
+
+
+class Field {
+public:
+    std::vector<Object> objects;
+
+    Field(std::vector<Object> objects) {
+        this->objects = objects;
+    }
+    ~Field() {
+        this->objects.clear();
+    }
+
+    void addObject(Object object) {
+        this->objects.push_back(object);
+        object.field = this;
+    }
+
+    void removeObject(Object object) {
+        this->objects.erase(std::remove_if(this->objects.begin(), this->objects.end(), [object](Object *o) {
+            return o->ID == object.ID;
+        }), this->objects.end());
+    }
+    void removeObject(int ID) {
+        this->objects.erase(std::remove_if(this->objects.begin(), this->objects.end(), [ID](Object *o) {
+            return o->ID == ID;
+        }), this->objects.end());
+    }
+
+    void removeObjectsByCoordinates(int x, int y) {
+        this->objects.erase(std::remove_if(this->objects.begin(), this->objects.end(), [x, y](Object *o) {
+            return o->x == x && o->y == y;
+        }), this->objects.end());
     }
 };
