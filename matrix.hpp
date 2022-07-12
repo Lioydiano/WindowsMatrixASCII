@@ -40,6 +40,8 @@ public:
     char skin;
     Style style;
     Field *field;
+    bool alive;
+    bool toBeMoved;
 
     Object(int x, int y, char skin, Style style) {
         this->ID = currentID++;
@@ -47,16 +49,36 @@ public:
         this->y = y;
         this->skin = skin;
         this->style = style;
+        this->alive = true;
+        this->toBeMoved = true;
     }
     Object(int x, int y, char skin, Style style, Field *field) {
         this->field = field;
+        this->field->addObject(this);
         Object(x, y, skin, style);
     }
-
     ~Object() {
         field->objects.erase(std::remove_if(field->objects.begin(), field->objects.end(), [this](Object *o) {
             return o->ID == this->ID;
         }), field->objects.end());
+    }
+
+    void moveTo(int x, int y) {
+        this->x = x;
+        this->y = y;
+        this->toBeMoved = true;
+    }
+    void moveBy(int x, int y) {
+        this->x += x;
+        this->y += y;
+        this->toBeMoved = true;
+    }
+
+    void draw() {
+        if (toBeMoved) {
+            toBeMoved = false;
+            // TODO: Move to the correct position
+        }
     }
 };
 
