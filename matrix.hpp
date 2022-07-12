@@ -98,6 +98,10 @@ public:
         this->objects.push_back(object);
         object.field = this;
     }
+    void addObject(Object *object) {
+        this->objects.push_back(*object);
+        object->field = this;
+    }
 
     void removeObject(Object object) {
         this->objects.erase(std::remove_if(this->objects.begin(), this->objects.end(), [object](Object *o) {
