@@ -12,8 +12,9 @@ public:
         this->lenght = 0;
         this->codes = {};
     }
-    Style(int codes[]) {
-        this->lenght = sizeof(codes)/sizeof(int);
+    Style(int codes[], int lenght) {
+        // this->lenght = sizeof(codes)/sizeof(int);
+        this->lenght = lenght;
         for (int i = 0; i < this->lenght; i++)
             this->codes.push_back(codes[i]);
     }
