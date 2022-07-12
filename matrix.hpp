@@ -1,6 +1,9 @@
 #pragma once
 
+#include <algorithm>
+
 #include "style.hpp"
+#include "cursor.hpp"
 
 
 int currentID = 0;
@@ -52,16 +55,8 @@ public:
         this->alive = true;
         this->toBeMoved = true;
     }
-    Object(int x, int y, char skin, Style style, Field *field) {
-        this->field = field;
-        this->field->addObject(this);
-        Object(x, y, skin, style);
-    }
-    ~Object() {
-        field->objects.erase(std::remove_if(field->objects.begin(), field->objects.end(), [this](Object *o) {
-            return o->ID == this->ID;
-        }), field->objects.end());
-    }
+    Object(int x, int y, char skin, Style style, Field *field);
+    ~Object();
 
     void moveTo(int x, int y) {
         this->x = x;
@@ -78,6 +73,7 @@ public:
         if (toBeMoved) {
             toBeMoved = false;
             // TODO: Move to the correct position
+
         }
     }
 };
@@ -86,6 +82,7 @@ public:
 class Field {
 public:
     std::vector<Object> objects;
+    int shift[20][50] = {0};
 
     Field(std::vector<Object> objects) {
         this->objects = objects;
@@ -120,3 +117,15 @@ public:
         }), this->objects.end());
     }
 };
+
+
+Object::Object (int x, int y, char skin, Style style, Field *field) {
+    this->field = field;
+    this->field->addObject(this);
+    Object(x, y, skin, style);
+}
+Object::~Object() {
+    field->objects.erase(std::remove_if(field->objects.begin(), field->objects.end(), [&](Object *o) {
+        return o->ID == this->ID;
+    }), field->objects.end());
+}
