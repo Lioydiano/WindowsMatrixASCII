@@ -84,6 +84,11 @@ public:
     std::vector<Object> objects;
     int shift[20][50] = {0};
 
+    void print();
+    void print(const char matrix[20][50]);
+
+    Field() {
+        print(void_matrix);
     Field(std::vector<Object> objects) {
         this->objects = objects;
     }
@@ -128,4 +133,23 @@ Object::~Object() {
     field->objects.erase(std::remove_if(field->objects.begin(), field->objects.end(), [&](Object o) {
         return o.ID == this->ID;
     }), field->objects.end());
+}
+
+
+void Field::print() {
+    for (int i = 0; i < 20; i++) {
+        for (int j = 0; j < 50; j++) {
+            std::cout << void_matrix[i][j];
+        }
+        std::cout << std::endl;
+    }
+}
+void Field::print(const char matrix[20][50]) {
+    for (int i = 0; i < 20; i++) {
+        for (int j = 0; j < 50; j++) {
+            std::cout << matrix[i][j];
+        }
+        std::cout << LF;
+    }
+    std::cout << std::flush;
 }
