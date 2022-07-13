@@ -92,12 +92,15 @@ public:
         this->cursor = Cursor(0, 0, this);
         std::cout << cursor::visibility::hide;
         print(void_matrix);
+        this->objects = {};
     }
     Field(std::vector<Object> objects) {
+        Field();
         this->objects = objects;
     }
     ~Field() {
         this->objects.clear();
+        std::cout << SS;
     }
 
     void addObject(Object object) {

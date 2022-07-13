@@ -19,6 +19,8 @@
 #define CR '\x0d' // Carriage Return
 #define DEL '\x7f' // Delete
 
+#define SS "\33[2J\33[H" // Scroll Screen
+
 
 const std::string ESC_(ESC);
 const std::string CSI_(CSI);
