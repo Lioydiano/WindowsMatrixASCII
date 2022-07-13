@@ -82,13 +82,17 @@ public:
 class Field {
 public:
     std::vector<Object> objects;
+    Cursor cursor;
     int shift[20][50] = {0};
 
     void print();
     void print(const char matrix[20][50]);
 
     Field() {
+        this->cursor = Cursor(0, 0, this);
+        std::cout << cursor::visibility::hide;
         print(void_matrix);
+    }
     Field(std::vector<Object> objects) {
         this->objects = objects;
     }

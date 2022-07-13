@@ -60,6 +60,9 @@ namespace cursor {
         #define ATT160D_ "?12l" // "Cursor Blinking Disable"
         #define DECTCEMS_ "?25h" // "Cursor Show"
         #define DECTCEMH_ "?25l" // "Cursor Hide"
+
+        std::string show = CSI_ + std::string(DECTCEMS_);
+        std::string hide = CSI_ + std::string(DECTCEMH_);
     }
 
     namespace arrows {
