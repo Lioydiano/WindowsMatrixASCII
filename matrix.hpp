@@ -101,19 +101,19 @@ public:
     }
 
     void removeObject(Object object) {
-        this->objects.erase(std::remove_if(this->objects.begin(), this->objects.end(), [object](Object *o) {
-            return o->ID == object.ID;
+        this->objects.erase(std::remove_if(this->objects.begin(), this->objects.end(), [object](Object o) {
+            return o.ID == object.ID;
         }), this->objects.end());
     }
     void removeObject(int ID) {
-        this->objects.erase(std::remove_if(this->objects.begin(), this->objects.end(), [ID](Object *o) {
-            return o->ID == ID;
+        this->objects.erase(std::remove_if(this->objects.begin(), this->objects.end(), [ID](Object o) {
+            return o.ID == ID;
         }), this->objects.end());
     }
 
     void removeObjectsByCoordinates(int x, int y) {
-        this->objects.erase(std::remove_if(this->objects.begin(), this->objects.end(), [x, y](Object *o) {
-            return o->x == x && o->y == y;
+        this->objects.erase(std::remove_if(this->objects.begin(), this->objects.end(), [x, y](Object o) {
+            return o.x == x && o.y == y;
         }), this->objects.end());
     }
 };
@@ -125,7 +125,7 @@ Object::Object (int x, int y, char skin, Style style, Field *field) {
     Object(x, y, skin, style);
 }
 Object::~Object() {
-    field->objects.erase(std::remove_if(field->objects.begin(), field->objects.end(), [&](Object *o) {
-        return o->ID == this->ID;
+    field->objects.erase(std::remove_if(field->objects.begin(), field->objects.end(), [&](Object o) {
+        return o.ID == this->ID;
     }), field->objects.end());
 }

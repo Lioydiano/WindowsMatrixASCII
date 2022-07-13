@@ -2,6 +2,9 @@
 #include "matrix.hpp"
 
 
+class Field;
+
+
 class Cursor {
 public:
     int x;
