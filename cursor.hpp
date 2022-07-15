@@ -76,4 +76,14 @@ public:
     void restorePosition() {
         std::cout << CSI << ANSISYSRC;
     }
+
+    void backspace() {
+        std::cout << BS;
+        this->x--;
+    };
+    void deleteChar() {
+        std::cout << DEL;
+    };
+
+    void print(char c);
 };
