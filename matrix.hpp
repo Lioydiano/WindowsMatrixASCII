@@ -81,7 +81,7 @@ public:
     std::map<int, Object*> objects_by_id;
     std::map<int, std::vector<Object*>> objects_by_row; // Objects by rows (so that you can iterate over the objects in a row)
     Cursor cursor;
-    int shift[20][50] = {0}; // Gives the shifting between the coordinates and the real coordinates
+    int shift[20][50]; // Gives the shifting between the coordinates and the real coordinates
     std::vector<std::vector<char>> matrix; // Tracks down what's going on in the console character by character
 
     void print();
@@ -94,6 +94,12 @@ public:
         this->objects = {};
         this->objects_by_id = {};
         this->objects_by_row = {};
+        for (int i = 0; i < 20; i++) {
+            for (int j = 0; j < 50; j++) {
+                this->matrix[i].push_back(' ');
+                this->shift[i][j] = 0;
+            }
+        }
 
         // Set the matrix to the void matrix
         for (int i = 0; i < 20; i++) {
