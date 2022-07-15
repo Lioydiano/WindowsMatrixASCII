@@ -60,15 +60,7 @@ public:
     Object(int x, int y, char skin, Style style, Field *field);
     ~Object();
 
-    void moveTo(int x, int y) {
-        this->field->objects_by_row[this->y].erase(std::remove(this->field->objects_by_row[this->y].begin(), this->field->objects_by_row[this->y].end(), [this](Object *o) {
-            return this->ID == o->ID;
-        }), this->field->objects_by_row[this->y].end());
-        this->x = x;
-        this->y = y;
-        this->toBeMoved = true;
-        this->field->objects_by_row[this->y].push_back(this);
-    }
+    void moveTo(int x, int y);
     void moveBy(int x, int y) {
         this->moveTo(this->x + x, this->y + y);
     }
@@ -162,8 +154,8 @@ public:
         this->objects.erase(std::remove_if(this->objects.begin(), this->objects.end(), [x, y](Object o) {
             return o.x == x && o.y == y;
         }), this->objects.end());
-        std::experimental::erase_if(this->objects_by_id, [x, y](Object* o) {
-            return o->x == x && o->y == y;
+        std::experimental::erase_if(this->objects_by_id, [x, y](std::pair<int, Object*> kv) {
+            return kv.second->x == x && kv.second->y == y;
         });
         this->objects_by_row[y].erase(std::remove_if(this->objects_by_row[y].begin(), this->objects_by_row[y].end(), [x, y](Object *o) {
             return o->x == x;
@@ -179,6 +171,16 @@ Object::Object (int x, int y, char skin, Style style, Field *field) {
 }
 Object::~Object() {
     field->removeObject(*this);
+}
+
+void Object::moveTo(int x, int y) {
+    this->field->objects_by_row[this->y].erase(std::remove_if(this->field->objects_by_row[this->y].begin(), this->field->objects_by_row[this->y].end(), [this](Object *o) {
+        return this->ID == o->ID;
+    }), this->field->objects_by_row[this->y].end());
+    this->x = x;
+    this->y = y;
+    this->toBeMoved = true;
+    this->field->objects_by_row[this->y].push_back(this);
 }
 
 
